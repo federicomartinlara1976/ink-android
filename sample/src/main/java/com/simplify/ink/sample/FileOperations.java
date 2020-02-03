@@ -19,10 +19,14 @@ public class FileOperations {
     private MainActivity mainActivity;
     
     private String dataDir;
+    
+    private InkView ink;
 
     public FileOperations(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        // Gets resources needed for operations (canvas and data dir)
         dataDir = mainActivity.getApplicationContext().getFilesDir().getAbsolutePath();
+        ink = mainActivity.getInkView();
     }
 
     /**
@@ -33,7 +37,6 @@ public class FileOperations {
         try {
             out = new FileOutputStream(dataDir + "/image.png");
 
-            InkView ink = mainActivity.getInkView();
             // Antes de guardar, pone el fondo transparente
             ink.setBackgroundColor(Color.TRANSPARENT);
             ink.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
@@ -59,7 +62,6 @@ public class FileOperations {
         try {
             pw = new PrintWriter(new File(dataDir + "/coordinates.txt"));
             
-            InkView ink = mainActivity.getInkView();
             // Write the coordinates
             for (InkPoint inkPoint : ink.getPoints()) {
                 // TODO - Write the point line (x y x y time)
