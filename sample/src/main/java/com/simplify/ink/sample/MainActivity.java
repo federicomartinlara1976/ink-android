@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             initSignCanvas();
             initButtons();
+            
+            // Deletes previous image and data coordinates (if any) 
             operations.deletePrevImage();
             operations.deletePrevCoordinates();
         } catch (FileOperationException e) {
