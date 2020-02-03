@@ -1,4 +1,4 @@
-
+package com.simplify.ink.sample;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
