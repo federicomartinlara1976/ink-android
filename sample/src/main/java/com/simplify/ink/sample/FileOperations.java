@@ -65,7 +65,9 @@ public class FileOperations {
             // Write the coordinates
             for (InkPoint inkPoint : ink.getPoints()) {
                 // TODO - Write the point line (format: x,y,x,y,time;)
-                pw.println("");
+                String line = String.format("%d,%d,%d,%d,%d;", 
+                                            inkPoint.getX(), inkPoint.getY(), inkPoint.getX(), inkPoint.getY(), inkPoint.getTime());
+                pw.println(line);
             }
             
         } catch (FileNotFoundException e) {
