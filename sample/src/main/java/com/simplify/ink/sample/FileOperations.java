@@ -2,6 +2,7 @@ package com.simplify.ink.sample;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Environment;
 import android.util.Log;
 
 import com.simplify.ink.InkView;
@@ -25,8 +26,8 @@ public class FileOperations {
     public FileOperations(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
         // Gets resources needed for operations (canvas and data dir)
-        // TODO - Write in external
-        dataDir = mainActivity.getApplicationContext().getFilesDir().getAbsolutePath();
+        // Read / Write in external storage
+        dataDir = mainActivity.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         ink = mainActivity.getInkView();
     }
 
