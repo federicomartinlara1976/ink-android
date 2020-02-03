@@ -63,3 +63,9 @@ or you can also include a background color:
 ```java
 Bitmap drawing = ink.getBitmap(getResources().getColor(R.color.my_background_color));
 ```
+
+You can read the signature coordinates (for example to store in a text file):
+
+```java
+List<InkPoint> coordinates = ink.getPoints();
+```
