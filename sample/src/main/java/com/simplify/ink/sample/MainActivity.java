@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             initSignCanvas();
             initButtons();
             operations.deletePrevImage();
+            operations.deletePrevCoordinates();
         } catch (FileOperationException e) {
             Log.e("ERROR", e.getMessage());
         }
