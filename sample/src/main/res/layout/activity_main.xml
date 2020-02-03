@@ -9,7 +9,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="8dp"
-    tools:context="net.bounceme.chronos.digitalsignature.MainActivity">
+    tools:context="com.simplify.ink.sample.MainActivity">
 
     <LinearLayout
         android:id="@+id/signatureTitle"
