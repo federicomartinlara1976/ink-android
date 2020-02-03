@@ -2,7 +2,6 @@ package com.simplify.ink.sample;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.simplify.ink.InkView;
