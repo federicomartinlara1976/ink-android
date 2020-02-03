@@ -17,9 +17,12 @@ import java.nio.file.Files;
 public class FileOperations {
 
     private MainActivity mainActivity;
+    
+    private String dataDir;
 
     public FileOperations(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        dataDir = getDataDir();
     }
 
     /**
@@ -28,7 +31,6 @@ public class FileOperations {
     public void saveImage() throws FileOperationException {
         FileOutputStream out = null;
         try {
-            String dataDir = getDataDir();
             out = new FileOutputStream(dataDir + "/image.png");
 
             InkView ink = mainActivity.getInkView();
@@ -55,7 +57,6 @@ public class FileOperations {
     public void saveCoordinates() throws FileOperationException {
         PrintWriter pw = null;
         try {
-            String dataDir = getDataDir();
             pw = new PrintWriter(new File(dataDir + "/coordinates.txt"));
             
             InkView ink = mainActivity.getInkView();
@@ -82,34 +83,27 @@ public class FileOperations {
      * Delete prev generated image on data dir
      */
     public void deletePrevImage() throws FileOperationException {
-        try {
-            String dataDir = getDataDir();
-            deleteFile(dataDir + "/image.png");
-        } catch (IOException e) {
-            Log.e("ERROR", e.getMessage());
-            throw new FileOperationException(e);
-        }
+        deleteFile(dataDir + "/image.png");
     }
     
     /**
      * Delete prev generated coordinates on data dir
      */
     public void deletePrevCoordinates() throws FileOperationException {
+        deletefile(dataDir + "/coordinates.txt");
+    }
+    
+    private String getDataDir() {
+        return mainActivity.getApplicationContext().getFilesDir().getAbsolutePath();   
+    }
+    
+    private void deleteFile(String fileName) throws FileOperationException {
         try {
-            String dataDir = getDataDir();
-            deletefile(dataDir + "/coordinates.txt");
+            File file = new File(fileName);
+            Files.delete(file.toPath());
         } catch (IOException e) {
             Log.e("ERROR", e.getMessage());
             throw new FileOperationException(e);
         }
-    }
-    
-    private String getDataDir() {
-        return appCompatActivity.getApplicationContext().getFilesDir().getAbsolutePath();   
-    }
-    
-    private void deleteFile(String fileName) throws IOException {
-        File file = new File(fileName);
-        Files.delete(file.toPath());
     }
 }
