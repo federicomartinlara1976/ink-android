@@ -9,7 +9,7 @@ public class SignActionListener implements View.OnClickListener {
   
   private FileOperations operations;
   
-  public ClearActionListener(MainActivity mainActivity, FileOperations operations) {
+  public SignActionListener(MainActivity mainActivity, FileOperations operations) {
     this.mainActivity = mainActivity;
     this.operations = operations;
   }

@@ -25,6 +25,7 @@ public class FileOperations {
     public FileOperations(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
         // Gets resources needed for operations (canvas and data dir)
+        // TODO - Write in external
         dataDir = mainActivity.getApplicationContext().getFilesDir().getAbsolutePath();
         ink = mainActivity.getInkView();
     }
@@ -73,12 +74,8 @@ public class FileOperations {
         } catch (FileNotFoundException e) {
             throw new FileOperationException(e);
         } finally {
-            try {
-                if (pw != null) {
-                    pw.close();
-                }
-            } catch (IOException e) {
-                Log.e("FATAL", e.getMessage());
+            if (pw != null) {
+                pw.close();
             }
         }
     }
