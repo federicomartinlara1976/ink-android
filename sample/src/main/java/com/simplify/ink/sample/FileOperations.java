@@ -28,7 +28,6 @@ public class FileOperations {
         FileOutputStream out = null;
         try {
             String dataDir = appCompatActivity.getApplicationContext().getFilesDir().getAbsolutePath();
-            Log.d("DEBUG", "Directorio donde se va a guardar: " + dataDir);
             out = new FileOutputStream(dataDir + "/image.png");
 
             // Antes de guardar, pone el fondo transparente
@@ -54,7 +53,6 @@ public class FileOperations {
     public void deletePrevImage() throws FileOperationException {
         try {
             String dataDir = appCompatActivity.getApplicationContext().getFilesDir().getAbsolutePath();
-            Log.d("DEBUG", "Directorio de trabajo: " + dataDir);
             File file = new File(dataDir + "/image.png");
             Files.delete(file.toPath());
         } catch (IOException e) {
