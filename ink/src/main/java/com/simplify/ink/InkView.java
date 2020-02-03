@@ -486,24 +486,24 @@ public class InkView extends View {
         if (queueSize == 1) {
             // compute starting velocity
             int recycleSize = pointRecycle.size();
-            p.velocity = (recycleSize > 0) ? pointRecycle.get(recycleSize - 1).velocityTo(p) / 2f : 0f;
+            p.setVelocity((recycleSize > 0) ? pointRecycle.get(recycleSize - 1).velocityTo(p) / 2f : 0f);
 
             // compute starting stroke width
-            paint.setStrokeWidth(computeStrokeWidth(p.velocity));
+            paint.setStrokeWidth(computeStrokeWidth(p.getVelocity()));
         } else if (queueSize == 2) {
             InkPoint p0 = pointQueue.get(0);
 
             // compute velocity for new point
-            p.velocity = p0.velocityTo(p);
+            p.setVelocity(p0.velocityTo(p));
 
             // re-compute velocity for 1st point (predictive velocity)
-            p0.velocity = p0.velocity + p.velocity / 2f;
+            p0.setVelocity(p0.getVelocity() + p.getVelocity() / 2f);
 
             // find control points for first point
             p0.findControlPoints(null, p);
 
             // update starting stroke width
-            paint.setStrokeWidth(computeStrokeWidth(p0.velocity));
+            paint.setStrokeWidth(computeStrokeWidth(p0.getVelocity()));
         } else if (queueSize == 3) {
             InkPoint p0 = pointQueue.get(0);
             InkPoint p1 = pointQueue.get(1);
@@ -512,7 +512,7 @@ public class InkView extends View {
             p1.findControlPoints(p0, p);
 
             // compute velocity for new point
-            p.velocity = p1.velocityTo(p);
+            p.setVelocity(p1.velocityTo(p));
 
             // draw geometry between first 2 points
             draw(p0, p1);
@@ -543,27 +543,27 @@ public class InkView extends View {
         paint.setStyle(Paint.Style.FILL);
 
         // draw dot
-        canvas.drawCircle(p.x, p.y, paint.getStrokeWidth() / 2f, paint);
+        canvas.drawCircle(p.getX(), p.getY(), paint.getStrokeWidth() / 2f, paint);
 
         invalidate();
     }
 
     void draw(InkPoint p1, InkPoint p2) {
         // init dirty rect
-        dirty.left = Math.min(p1.x, p2.x);
-        dirty.right = Math.max(p1.x, p2.x);
-        dirty.top = Math.min(p1.y, p2.y);
-        dirty.bottom = Math.max(p1.y, p2.y);
+        dirty.left = Math.min(p1.getX(), p2.getX());
+        dirty.right = Math.max(p1.getX(), p2.getX());
+        dirty.top = Math.min(p1.getY(), p2.getY());
+        dirty.bottom = Math.max(p1.getY(), p2.getY());
 
         paint.setStyle(Paint.Style.STROKE);
 
         // adjust low-pass ratio from changing acceleration
         // using comfortable range of 0.2 -> 0.3 approx.
-        float acceleration = Math.abs((p2.velocity - p1.velocity) / (p2.time - p1.time)); // in/s^2
+        float acceleration = Math.abs((p2.getVelocity() - p1.getVelocity()) / (p2.getTime() - p1.getTime())); // in/s^2
         float filterRatio = Math.min(FILTER_RATIO_MIN + FILTER_RATIO_ACCELERATION_MODIFIER * acceleration / THRESHOLD_ACCELERATION, 1f);
 
         // compute new stroke width
-        float desiredWidth = computeStrokeWidth(p2.velocity);
+        float desiredWidth = computeStrokeWidth(p2.getVelocity());
         float startWidth = paint.getStrokeWidth();
 
         float endWidth = filterRatio * desiredWidth + (1f - filterRatio) * startWidth;
@@ -573,7 +573,7 @@ public class InkView extends View {
         if (hasFlags(FLAG_INTERPOLATION)) {
 
             // compute # of steps to interpolate in the bezier curve
-            int steps = (int) (Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2)) / 5);
+            int steps = (int) (Math.sqrt(Math.pow(p2.getX() - p1.getX(), 2) + Math.pow(p2.getY() - p1.getY(), 2)) / 5);
 
             // computational setup for differentials used to interpolate the bezier curve
             float u = 1f / (steps + 1);
@@ -585,20 +585,20 @@ public class InkView extends View {
             float pre3 = 6f * uu;
             float pre4 = 6f * uuu;
 
-            float tmp1x = p1.x - p1.c2x * 2f + p2.c1x;
-            float tmp1y = p1.y - p1.c2y * 2f + p2.c1y;
-            float tmp2x = (p1.c2x - p2.c1x) * 3f - p1.x + p2.x;
-            float tmp2y = (p1.c2y - p2.c1y) * 3f - p1.y + p2.y;
+            float tmp1x = p1.getX() - p1.getC2x() * 2f + p2.getC1x();
+            float tmp1y = p1.getY() - p1.getC2y() * 2f + p2.getC1y();
+            float tmp2x = (p1.getC2x() - p2.getC1x()) * 3f - p1.getX() + p2.getX();
+            float tmp2y = (p1.getC2y() - p2.getC1y()) * 3f - p1.getY() + p2.getY();
 
-            float dx = (p1.c2x - p1.x) * pre1 + tmp1x * pre2 + tmp2x * uuu;
-            float dy = (p1.c2y - p1.y) * pre1 + tmp1y * pre2 + tmp2y * uuu;
+            float dx = (p1.getC2x() - p1.getX()) * pre1 + tmp1x * pre2 + tmp2x * uuu;
+            float dy = (p1.getC2y() - p1.getY()) * pre1 + tmp1y * pre2 + tmp2y * uuu;
             float ddx = tmp1x * pre3 + tmp2x * pre4;
             float ddy = tmp1y * pre3 + tmp2y * pre4;
             float dddx = tmp2x * pre4;
             float dddy = tmp2y * pre4;
 
-            float x1 = p1.x;
-            float y1 = p1.y;
+            float x1 = p1.getX();
+            float y1 = p1.getY();
             float x2, y2;
 
             // iterate over each step and draw the curve
@@ -625,11 +625,11 @@ public class InkView extends View {
             }
 
             paint.setStrokeWidth(endWidth);
-            canvas.drawLine(x1, y1, p2.x, p2.y, paint);
+            canvas.drawLine(x1, y1, p2.getX(), p2.getY(), paint);
         }
         // no interpolation, draw line between points
         else {
-            canvas.drawLine(p1.x, p1.y, p2.x, p2.y, paint);
+            canvas.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY(), paint);
             paint.setStrokeWidth(endWidth);
         }
 
