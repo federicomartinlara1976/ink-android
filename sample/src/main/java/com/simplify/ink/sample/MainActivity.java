@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    operations.saveImage(ink);
-                    operations.saveCoordinates(ink);
+                    operations.saveImage();
+                    operations.saveCoordinates();
                 } catch (FileOperationException e) {
                     // Exit program with fatal error
                     Log.e("FATAL", e.getMessage());
