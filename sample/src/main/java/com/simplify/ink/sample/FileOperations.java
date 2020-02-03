@@ -17,21 +17,22 @@ import java.nio.file.Files;
 
 public class FileOperations {
 
-    private AppCompatActivity appCompatActivity;
+    private MainActivity mainActivity;
 
-    public FileOperations(AppCompatActivity appCompatActivity) {
-        this.appCompatActivity = appCompatActivity;
+    public FileOperations(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     /**
      * save ink signature bitmap to internal storage
      */
-    public void saveImage(InkView ink) throws FileOperationException {
+    public void saveImage() throws FileOperationException {
         FileOutputStream out = null;
         try {
             String dataDir = getDataDir();
             out = new FileOutputStream(dataDir + "/image.png");
 
+            InkView ink = mainActivity.getInkView();
             // Antes de guardar, pone el fondo transparente
             ink.setBackgroundColor(Color.TRANSPARENT);
             ink.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
@@ -52,12 +53,13 @@ public class FileOperations {
     /**
      * save ink signature coordinates to internal storage
      */
-    public void saveCoordinates(InkView ink) throws FileOperationException {
+    public void saveCoordinates() throws FileOperationException {
         PrintWriter pw = null;
         try {
             String dataDir = getDataDir();
             pw = new PrintWriter(new File(dataDir + "/coordinates.txt"));
-
+            
+            InkView ink = mainActivity.getInkView();
             // Write the coordinates
             for (InkPoint inkPoint : ink.getPoints()) {
                 // TODO - Write the point line (x y x y time)
