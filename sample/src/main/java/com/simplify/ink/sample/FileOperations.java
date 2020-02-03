@@ -11,6 +11,7 @@ import com.simplify.ink.InkPoint;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 
@@ -52,22 +53,23 @@ public class FileOperations {
      * save ink signature coordinates to internal storage
      */
     public void saveCoordinates(InkView ink) throws FileOperationException {
-        FileOutputStream out = null;
+        PrintWriter pw = null;
         try {
             String dataDir = getDataDir();
-            out = new FileOutputStream(dataDir + "/coordinates.txt");
+            pw = new PrintWriter(new File(dataDir + "/coordinates.txt"));
 
             // Write the coordinates
             for (InkPoint inkPoint : ink.getPoints()) {
                 // TODO - Write the point line (x y x y time)
+                pw.println("");
             }
             
         } catch (FileNotFoundException e) {
             throw new FileOperationException(e);
         } finally {
             try {
-                if (out != null) {
-                    out.close();
+                if (pw != null) {
+                    pw.close();
                 }
             } catch (IOException e) {
                 Log.e("FATAL", e.getMessage());
@@ -81,8 +83,7 @@ public class FileOperations {
     public void deletePrevImage() throws FileOperationException {
         try {
             String dataDir = getDataDir();
-            File file = new File(dataDir + "/image.png");
-            Files.delete(file.toPath());
+            deleteFile(dataDir + "/image.png");
         } catch (IOException e) {
             Log.e("ERROR", e.getMessage());
             throw new FileOperationException(e);
@@ -95,8 +96,7 @@ public class FileOperations {
     public void deletePrevCoordinates() throws FileOperationException {
         try {
             String dataDir = getDataDir();
-            File file = new File(dataDir + "/coordinates.txt");
-            Files.delete(file.toPath());
+            deletefile(dataDir + "/coordinates.txt");
         } catch (IOException e) {
             Log.e("ERROR", e.getMessage());
             throw new FileOperationException(e);
@@ -105,5 +105,10 @@ public class FileOperations {
     
     private String getDataDir() {
         return appCompatActivity.getApplicationContext().getFilesDir().getAbsolutePath();   
+    }
+    
+    private void deleteFile(String fileName) throws IOException {
+        File file = new File(fileName);
+        Files.delete(file.toPath());
     }
 }
