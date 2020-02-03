@@ -89,15 +89,37 @@ public class InkPoint {
         c2y += dy + r * (yM - c2y);
     }
     
-    private float getX() {
+    public float getX() {
         return x;
     }
     
-    private float getY() {
+    public float getY() {
         return y;
     }
     
-    private long getTime() {
+    public long getTime() {
         return time;
+    }
+
+    public float getVelocity() { return velocity; }
+
+    public void setVelocity(float velocity) {
+        this.velocity = velocity;
+    }
+
+    public float getC1x() {
+        return c1x;
+    }
+
+    public float getC1y() {
+        return c1y;
+    }
+
+    public float getC2x() {
+        return c2x;
+    }
+
+    public float getC2y() {
+        return c2y;
     }
 }
