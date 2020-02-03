@@ -78,21 +78,8 @@ public class MainActivity extends AppCompatActivity {
         mCleanButton.setOnClickListener(clearActionListener);
 
         /** perform `sign` action */
-        mSignButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    operations.saveImage();
-                    operations.saveCoordinates();
-                    finish();
-                } catch (FileOperationException e) {
-                    // Exit program with fatal error
-                    Log.e("FATAL", e.getMessage());
-                    finishAffinity();
-                    System.exit(0);
-                }
-            }
-        });
+        SignActionListener signActionListener = new SignActionListener(this, operations);
+        mSignButton.setOnClickListener(signActionListener);
     }
 
     @Override
