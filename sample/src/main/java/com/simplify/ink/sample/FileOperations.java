@@ -93,6 +93,9 @@ public class FileOperations {
         deleteFile(dataDir + "/coordinates.txt");
     }
     
+    /**
+     * Safety delete
+     */
     private void deleteFile(String fileName) throws FileOperationException {
         try {
             File file = new File(fileName);
