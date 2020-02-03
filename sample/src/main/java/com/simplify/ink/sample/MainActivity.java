@@ -88,14 +88,13 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     operations.saveImage();
                     operations.saveCoordinates();
+                    finish();
                 } catch (FileOperationException e) {
                     // Exit program with fatal error
                     Log.e("FATAL", e.getMessage());
                     finishAffinity();
                     System.exit(0);
                 }
-
-                finish();
             }
         });
     }
