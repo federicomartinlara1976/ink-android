@@ -2,10 +2,10 @@ package com.simplify.ink;
 
 public class InkPoint {
 
-    float x, y, c1x, c1y, c2x, c2y, velocity;
-    long time;
-    float density;
-    float smoothingRatio;
+    private float x, y, c1x, c1y, c2x, c2y, velocity;
+    private long time;
+    private float density;
+    private float smoothingRatio;
 
 
     InkPoint(float x, float y, long time, float density, float smoothingRatio) {
@@ -87,5 +87,17 @@ public class InkPoint {
         c1y += dy + r * (yM - c1y);
         c2x += dx + r * (xM - c2x);
         c2y += dy + r * (yM - c2y);
+    }
+    
+    private float getX() {
+        return x;
+    }
+    
+    private float getY() {
+        return y;
+    }
+    
+    private long getTime() {
+        return time;
     }
 }
