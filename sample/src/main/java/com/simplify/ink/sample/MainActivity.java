@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     operations.saveImage(ink);
+                    operations.saveCoordinates(ink);
                     Log.d("DEBUG", "Imagen guardada");
                 } catch (FileOperationException e) {
                     // Exit program with fatal error
