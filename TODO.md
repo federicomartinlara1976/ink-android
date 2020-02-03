@@ -1,7 +1,7 @@
-## Versión 1.1.0-SNAPSHOT
+# Versión 1.1.0-SNAPSHOT
 
 - Implementar en la clase InkPoint los métodos para recoger x, y, time
 
-# FIXES:
+## FIXES:
 
 - Corregir errores de ámbito ocasionados al encapsular la clase InkPoint
