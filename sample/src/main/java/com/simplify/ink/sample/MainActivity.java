@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
         mCleanButton = (ImageView) findViewById(R.id.iv_clean);
 
         /** Button to clean ink panel */
-        ClearActionListener listener = new ClearActionListener(ink);
-        mCleanButton.setOnClickListener(ink);
+        ClearActionListener clearActionListener = new ClearActionListener(ink);
+        mCleanButton.setOnClickListener(clearActionListener);
 
         /** perform `sign` action */
         mSignButton.setOnClickListener(new View.OnClickListener() {
