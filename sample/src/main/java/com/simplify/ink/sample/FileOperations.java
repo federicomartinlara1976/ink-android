@@ -22,7 +22,7 @@ public class FileOperations {
 
     public FileOperations(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
-        dataDir = getDataDir();
+        dataDir = mainActivity.getApplicationContext().getFilesDir().getAbsolutePath();
     }
 
     /**
@@ -90,11 +90,7 @@ public class FileOperations {
      * Delete prev generated coordinates on data dir
      */
     public void deletePrevCoordinates() throws FileOperationException {
-        deletefile(dataDir + "/coordinates.txt");
-    }
-    
-    private String getDataDir() {
-        return mainActivity.getApplicationContext().getFilesDir().getAbsolutePath();   
+        deleteFile(dataDir + "/coordinates.txt");
     }
     
     private void deleteFile(String fileName) throws FileOperationException {
