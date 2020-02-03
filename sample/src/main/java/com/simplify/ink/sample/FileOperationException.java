@@ -1,4 +1,4 @@
-
+package com.simplify.ink.sample;
 
 public class FileOperationException extends Exception {
     public FileOperationException() {
