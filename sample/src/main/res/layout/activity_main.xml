@@ -1,45 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
 
-    <android.support.design.widget.AppBarLayout
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="8dp"
+    tools:context="net.bounceme.chronos.digitalsignature.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/signatureTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="@string/app_name" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/top_border"
-            android:gravity="center"
-            android:text="@string/please_sign_above"
-            android:textStyle="bold"/>
+            android:id="@+id/tv_signature_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/main_titulo"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-        <com.simplify.ink.InkView
-            android:id="@+id/ink"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:inkFlags="interpolation|responsiveWeight" />
+        <ImageView
+            android:id="@+id/iv_clean"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:src="@mipmap/ic_clean" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-</LinearLayout>
+    <com.simplify.ink.InkView
+        android:id="@+id/ink"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_below="@+id/signatureTitle"
+        android:background="@drawable/border"
+        app:inkFlags="interpolation|responsiveWeight" />
+
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_sign"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/colored_button"
+            android:padding="12dp"
+            android:text="@string/main_firmar"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+</RelativeLayout>
