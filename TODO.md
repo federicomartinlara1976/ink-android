@@ -1,0 +1,1 @@
+- Implementar en la clase InkPoint los métodos para recoger x, y, time
