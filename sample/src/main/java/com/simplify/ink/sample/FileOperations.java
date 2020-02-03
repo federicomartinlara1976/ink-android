@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.simplify.ink.InkView;
+import com.simplify.ink.InkPoint;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,12 +23,12 @@ public class FileOperations {
     }
 
     /**
-     * save ink signature to internal storage
+     * save ink signature bitmap to internal storage
      */
     public void saveImage(InkView ink) throws FileOperationException {
         FileOutputStream out = null;
         try {
-            String dataDir = appCompatActivity.getApplicationContext().getFilesDir().getAbsolutePath();
+            String dataDir = getDataDir();
             out = new FileOutputStream(dataDir + "/image.png");
 
             // Antes de guardar, pone el fondo transparente
@@ -46,18 +47,63 @@ public class FileOperations {
             }
         }
     }
+    
+    /**
+     * save ink signature coordinates to internal storage
+     */
+    public void saveCoordinates(InkView ink) throws FileOperationException {
+        FileOutputStream out = null;
+        try {
+            String dataDir = getDataDir();
+            out = new FileOutputStream(dataDir + "/coordinates.txt");
+
+            // Write the coordinates
+            for (InkPoint inkPoint : ink.getPoints()) {
+                // TODO - Write the point line (x y x y time)
+            }
+            
+        } catch (FileNotFoundException e) {
+            throw new FileOperationException(e);
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                Log.e("FATAL", e.getMessage());
+            }
+        }
+    }
 
     /**
-     * save ink signature to internal storage
+     * Delete prev generated image on data dir
      */
     public void deletePrevImage() throws FileOperationException {
         try {
-            String dataDir = appCompatActivity.getApplicationContext().getFilesDir().getAbsolutePath();
+            String dataDir = getDataDir();
             File file = new File(dataDir + "/image.png");
             Files.delete(file.toPath());
         } catch (IOException e) {
             Log.e("ERROR", e.getMessage());
             throw new FileOperationException(e);
         }
+    }
+    
+    /**
+     * Delete prev generated coordinates on data dir
+     */
+    public void deletePrevCoordinates() throws FileOperationException {
+        try {
+            String dataDir = getDataDir();
+            File file = new File(dataDir + "/coordinates.txt");
+            Files.delete(file.toPath());
+        } catch (IOException e) {
+            Log.e("ERROR", e.getMessage());
+            throw new FileOperationException(e);
+        }
+    }
+    
+    private String getDataDir() {
+        return appCompatActivity.getApplicationContext().getFilesDir().getAbsolutePath();   
     }
 }
