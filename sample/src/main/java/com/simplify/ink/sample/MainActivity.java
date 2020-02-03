@@ -18,71 +18,89 @@ package com.simplify.ink.sample;
 
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.simplify.ink.InkView;
 
-public class MainActivity extends Activity {
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 
-    Toolbar toolbar;
-    InkView inkView;
+public class MainActivity extends AppCompatActivity {
+
+    /** Panel for physic signature. */
+    private InkView ink;
+
+    /** Button to save sign picture */
+    private Button mSignButton;
+
+    private ImageView mCleanButton;
+
+    private FileOperations operations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        inkView = (InkView) findViewById(R.id.ink);
+        operations = new FileOperations(this);
 
-        initToolbar();
+        try {
+            initSignCanvas();
+            initButtons();
+            operations.deletePrevImage();
+        } catch (FileOperationException e) {
+            Log.e("ERROR", e.getMessage());
+        }
     }
 
-    void initToolbar() {
-        Menu menu = toolbar.getMenu();
-        getMenuInflater().inflate(R.menu.options, menu);
+    private void initSignCanvas() {
+        ink = (InkView) findViewById(R.id.ink);
+    }
 
-        MenuItem item = menu.findItem(R.id.menu_interpolation);
-        item.setChecked(inkView.hasFlag(InkView.FLAG_INTERPOLATION));
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+    private void initButtons() {
+        mSignButton = (Button) findViewById(R.id.button_sign);
+        mCleanButton = (ImageView) findViewById(R.id.iv_clean);
+
+        /** Button to clean ink panel */
+        mCleanButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                item.setChecked(!item.isChecked());
-                if (item.isChecked()) {
-                    inkView.addFlag(InkView.FLAG_INTERPOLATION);
-                } else {
-                    inkView.removeFlag(InkView.FLAG_INTERPOLATION);
+            public void onClick(View v) {
+                ink.clear();
+            }
+        });
+
+        /** perform `sign` action */
+        mSignButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    operations.saveImage(ink);
+                    Log.d("DEBUG", "Imagen guardada");
+                } catch (FileOperationException e) {
+                    // Exit program with fatal error
+                    Log.e("FATAL", e.getMessage());
+                    finishAffinity();
+                    System.exit(0);
                 }
-                return true;
-            }
-        });
 
-        item = menu.findItem(R.id.menu_responsive);
-        item.setChecked(inkView.hasFlag(InkView.FLAG_RESPONSIVE_WIDTH));
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                item.setChecked(!item.isChecked());
-                if (item.isChecked()) {
-                    inkView.addFlag(InkView.FLAG_RESPONSIVE_WIDTH);
-                } else {
-                    inkView.removeFlag(InkView.FLAG_RESPONSIVE_WIDTH);
-                }
-                return true;
+                finish();
             }
         });
+    }
 
-        item = menu.findItem(R.id.menu_clear);
-        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                inkView.clear();
-                return true;
-            }
-        });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
