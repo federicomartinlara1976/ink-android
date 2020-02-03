@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     operations.saveImage(ink);
                     operations.saveCoordinates(ink);
-                    Log.d("DEBUG", "Firma guardada");
                 } catch (FileOperationException e) {
                     // Exit program with fatal error
                     Log.e("FATAL", e.getMessage());
