@@ -19,12 +19,12 @@ public class SignActionListener implements View.OnClickListener {
     try {
       operations.saveImage();
       operations.saveCoordinates();
-      mainActivity.finish();
     } catch (FileOperationException e) {
-      // Exit program with fatal error
+      // Fatal error
       Log.e("FATAL", e.getMessage());
+    } finally {
       mainActivity.finishAffinity();
       System.exit(0);
-    }  
+    }
   }
 }
