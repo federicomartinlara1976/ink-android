@@ -404,6 +404,10 @@ public class InkView extends View {
         }
 
         invalidate();
+        
+        // Resets the point list
+        pointList.clear();
+        
         isEmpty = true;
     }
 
