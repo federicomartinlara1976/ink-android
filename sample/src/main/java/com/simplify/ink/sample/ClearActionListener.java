@@ -5,14 +5,14 @@ import com.simplify.ink.InkView;
 
 public class ClearActionListener implements View.OnClickListener {
   
-  private InkView ink;
+  private MainActivity mainActivity;
   
-  public ClearActionListener(InkView ink) {
-    this.ink = ink;
+  public ClearActionListener(MainActivity mainActivity) {
+    this.mainActivity = mainActivity;
   }
  
   @Override
   public void onClick(View v) {
-    ink.clear();
+    mainActivity.getInkView().clear();
   }
 }
