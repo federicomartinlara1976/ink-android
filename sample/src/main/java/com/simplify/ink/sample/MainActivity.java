@@ -26,12 +26,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         operations = new FileOperations(this);
         
         try {
             initComponents();
+            loadButtons();
             
             // Deletes previous image and data coordinates (if any) 
             operations.deletePrevImage();
@@ -42,10 +42,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
+        setContentView(R.layout.activity_main);
+        
         ink = (InkView) findViewById(R.id.ink);
         mSignButton = (Button) findViewById(R.id.button_sign);
         mCleanButton = (ImageView) findViewById(R.id.iv_clean);
-
+    }
+    
+    private void loadButtons() {
         /** Button to clean ink panel */
         ClearActionListener clearActionListener = new ClearActionListener(this);
         mCleanButton.setOnClickListener(clearActionListener);
