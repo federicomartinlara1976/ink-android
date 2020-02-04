@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
 public class FileOperations {
 
@@ -64,8 +65,6 @@ public class FileOperations {
             
             InkView ink = mainActivity.getInkView();
             List<InkPoint> points = ink.getPoints();
-            
-            Log.d("Total: " + points.size() + " points");
             
             for (InkPoint inkPoint : points) {
                 // Write the point line (format: x,y,x,y,time;)
