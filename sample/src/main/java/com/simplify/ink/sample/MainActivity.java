@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        operations = new FileOperations(this);
+        
         try {
             initSignCanvas();
             initButtons();
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         mCleanButton.setOnClickListener(clearActionListener);
 
         /** perform `sign` action */
-        operations = new FileOperations(this);
         SignActionListener signActionListener = new SignActionListener(this, operations);
         mSignButton.setOnClickListener(signActionListener);
     }
