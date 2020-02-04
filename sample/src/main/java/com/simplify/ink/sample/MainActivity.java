@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
         operations = new FileOperations(this);
         
         try {
-            initSignCanvas();
-            initButtons();
+            initComponents();
             
             // Deletes previous image and data coordinates (if any) 
             operations.deletePrevImage();
@@ -42,11 +41,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initSignCanvas() {
+    private void initComponents() {
         ink = (InkView) findViewById(R.id.ink);
-    }
-
-    private void initButtons() {
         mSignButton = (Button) findViewById(R.id.button_sign);
         mCleanButton = (ImageView) findViewById(R.id.iv_clean);
 
