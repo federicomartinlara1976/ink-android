@@ -88,6 +88,9 @@ public class InkView extends View {
     // points
     List<InkPoint> pointQueue = new ArrayList<>();
     List<InkPoint> pointRecycle = new ArrayList<>();
+    
+    // List to return the rendered points
+    List<InkPoint> pointList = new ArrayList<>();
 
     // misc
     float density;
@@ -481,6 +484,8 @@ public class InkView extends View {
 
     void addPoint(InkPoint p) {
         pointQueue.add(p);
+        // Stores point into the result list
+        pointList.add(p);
 
         int queueSize = pointQueue.size();
         if (queueSize == 1) {
@@ -642,6 +647,6 @@ public class InkView extends View {
      * @return The points list
      */
     public List<InkPoint> getPoints() {
-        return this.pointQueue;
+        return this.pointList;
     }
 }
