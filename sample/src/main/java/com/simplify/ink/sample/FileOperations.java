@@ -68,7 +68,7 @@ public class FileOperations {
             
             for (InkPoint inkPoint : points) {
                 // Write the point line (format: x,y,x,y,time;)
-                String line = String.format("%d,%d,%d,%d,%d;", 
+                String line = String.format("%f,%f,%f,%f,%d;", 
                                             inkPoint.getX(), inkPoint.getY(), inkPoint.getX(), inkPoint.getY(), inkPoint.getTime());
                 pw.println(line);
             }
