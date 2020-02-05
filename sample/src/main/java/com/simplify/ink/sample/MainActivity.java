@@ -51,12 +51,10 @@ public class MainActivity extends AppCompatActivity {
     
     private void loadButtons() {
         /** Button to clean ink panel */
-        ClearActionListener clearActionListener = new ClearActionListener(this);
-        mCleanButton.setOnClickListener(clearActionListener);
+        mCleanButton.setOnClickListener(new ClearActionListener(this));
 
         /** perform `sign` action */
-        SignActionListener signActionListener = new SignActionListener(this, operations);
-        mSignButton.setOnClickListener(signActionListener);
+        mSignButton.setOnClickListener(new SignActionListener(this, operations));
     }
 
     @Override
