@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Locale;
 
 public class FileOperations {
 
@@ -67,9 +68,12 @@ public class FileOperations {
             List<InkPoint> points = ink.getPoints();
             
             for (InkPoint inkPoint : points) {
-                // Write the point line (format: x,y,x,y,time;)
-                String line = String.format("%f,%f,%f,%f,%d;", 
-                                            inkPoint.getX(), inkPoint.getY(), inkPoint.getX(), inkPoint.getY(), inkPoint.getTime());
+                // Write the point line (format: x,y,c1x,c1y,c2x,c2y,velocity,time;)
+                String line = String.format(Locale.ROOT, "%f,%f,%f,%f,%f,%f,%f,%d;",
+                        inkPoint.getX(), inkPoint.getY(),
+                        inkPoint.getC1x(), inkPoint.getC1y(),
+                        inkPoint.getC2x(), inkPoint.getC2y(),
+                        inkPoint.getVelocity(), inkPoint.getTime());
                 pw.println(line);
             }
             
