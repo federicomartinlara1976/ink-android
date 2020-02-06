@@ -656,6 +656,12 @@ public class InkView extends View {
         return this.pointList;
     }
     
+    /**
+     * Returns the dimension of the drawing
+     *
+     * @return The dimension
+     */
     public Dimension getDimension() {
-        return null;
+        return new Dimension(this.getWidth(), this.getHeight());
+    }
 }
