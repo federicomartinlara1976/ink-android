@@ -31,6 +31,8 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.awt.Dimension;
+
 @SuppressWarnings("unused")
 public class InkView extends View {
 
@@ -653,4 +655,7 @@ public class InkView extends View {
     public List<InkPoint> getPoints() {
         return this.pointList;
     }
+    
+    public Dimension getDimension() {
+        return null;
 }
