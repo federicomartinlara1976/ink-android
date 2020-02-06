@@ -17,6 +17,8 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Locale;
 
+import java.awt.Dimension;
+
 public class FileOperations {
 
     private MainActivity mainActivity;
@@ -65,16 +67,26 @@ public class FileOperations {
             pw = new PrintWriter(new File(dataDir + "/coordinates.txt"));
             
             InkView ink = mainActivity.getInkView();
+            Dimension d = ink.getDimension();
             List<InkPoint> points = ink.getPoints();
+            int index = 0;
             
             for (InkPoint inkPoint : points) {
-                // Write the point line (format: x,y,c1x,c1y,c2x,c2y,velocity,time;)
-                String line = String.format(Locale.ROOT, "%f,%f,%f,%f,%f,%f,%f,%d;",
-                        inkPoint.getX(), inkPoint.getY(),
-                        inkPoint.getC1x(), inkPoint.getC1y(),
-                        inkPoint.getC2x(), inkPoint.getC2y(),
-                        inkPoint.getVelocity(), inkPoint.getTime());
+                String line = "";
+                // El primer item de la lista son las dimensiones del área de dibujo
+                if (i == 0) {
+                    line = String.format(Locale.ROOT, "%f,%f;", d.getWidth(), d.getHeight());
+                }
+                else {
+                    // Write the point line (format: x,y,c1x,c1y,c2x,c2y,velocity,time;)
+                    line = String.format(Locale.ROOT, "%f,%f,%f,%f,%f,%f,%f,%d;",
+                            inkPoint.getX(), inkPoint.getY(),
+                            inkPoint.getC1x(), inkPoint.getC1y(),
+                            inkPoint.getC2x(), inkPoint.getC2y(),
+                            inkPoint.getVelocity(), inkPoint.getTime());
+                }
                 pw.println(line);
+                i++;
             }
             
         } catch (FileNotFoundException e) {
