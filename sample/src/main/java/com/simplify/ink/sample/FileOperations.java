@@ -2,6 +2,7 @@ package com.simplify.ink.sample;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.RectF;
 import android.os.Environment;
 import android.util.Log;
 
@@ -16,8 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Locale;
-
-import java.awt.Dimension;
 
 public class FileOperations {
 
@@ -67,7 +66,7 @@ public class FileOperations {
             pw = new PrintWriter(new File(dataDir + "/coordinates.txt"));
             
             InkView ink = mainActivity.getInkView();
-            Dimension d = ink.getDimension();
+            RectF d = ink.getDimension();
             List<InkPoint> points = ink.getPoints();
             int index = 0;
             
@@ -75,7 +74,7 @@ public class FileOperations {
                 String line = "";
                 // El primer item de la lista son las dimensiones del área de dibujo
                 if (index == 0) {
-                    line = String.format(Locale.ROOT, "%f,%f", d.getWidth(), d.getHeight());
+                    line = String.format(Locale.ROOT, "%f,%f", d.right, d.bottom);
                 }
                 else {
                     // Write the point line (format: x,y,c1x,c1y,c2x,c2y,velocity,time;)

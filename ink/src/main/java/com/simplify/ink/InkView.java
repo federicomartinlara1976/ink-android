@@ -31,8 +31,6 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.awt.Dimension;
-
 @SuppressWarnings("unused")
 public class InkView extends View {
 
@@ -661,7 +659,7 @@ public class InkView extends View {
      *
      * @return The dimension
      */
-    public Dimension getDimension() {
-        return new Dimension(this.getWidth(), this.getHeight());
+    public RectF getDimension() {
+        return new RectF(0, 0, this.getWidth(), this.getHeight());
     }
 }
