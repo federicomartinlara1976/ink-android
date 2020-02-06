@@ -74,7 +74,7 @@ public class FileOperations {
             for (InkPoint inkPoint : points) {
                 String line = "";
                 // El primer item de la lista son las dimensiones del área de dibujo
-                if (i == 0) {
+                if (index == 0) {
                     line = String.format(Locale.ROOT, "%f,%f;", d.getWidth(), d.getHeight());
                 }
                 else {
@@ -86,7 +86,7 @@ public class FileOperations {
                             inkPoint.getVelocity(), inkPoint.getTime());
                 }
                 pw.println(line);
-                i++;
+                index++;
             }
             
         } catch (FileNotFoundException e) {
