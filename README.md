@@ -69,3 +69,9 @@ You can read the signature coordinates (for example to store in a text file):
 ```java
 List<InkPoint> coordinates = ink.getPoints();
 ```
+
+and also you can recover the dimension:
+
+```java
+Dimension d = ink.getDimension();
+```
