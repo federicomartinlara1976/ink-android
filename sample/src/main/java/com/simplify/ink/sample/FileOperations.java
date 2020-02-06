@@ -75,11 +75,11 @@ public class FileOperations {
                 String line = "";
                 // El primer item de la lista son las dimensiones del área de dibujo
                 if (index == 0) {
-                    line = String.format(Locale.ROOT, "%f,%f;", d.getWidth(), d.getHeight());
+                    line = String.format(Locale.ROOT, "%f,%f", d.getWidth(), d.getHeight());
                 }
                 else {
                     // Write the point line (format: x,y,c1x,c1y,c2x,c2y,velocity,time;)
-                    line = String.format(Locale.ROOT, "%f,%f,%f,%f,%f,%f,%f,%d;",
+                    line = String.format(Locale.ROOT, "%f,%f,%f,%f,%f,%f,%f,%d",
                             inkPoint.getX(), inkPoint.getY(),
                             inkPoint.getC1x(), inkPoint.getC1y(),
                             inkPoint.getC2x(), inkPoint.getC2y(),
