@@ -24,6 +24,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -133,7 +134,10 @@ public class InkView extends View {
 
         // init screen density
         DisplayMetrics metrics = getResources().getDisplayMetrics();
+        Log.d("INFO", "Metrics: ["+metrics.xdpi+", "+metrics.ydpi+"]");
+
         density = (metrics.xdpi + metrics.ydpi) / 2f;
+        Log.d("INFO", "Density: " + density);
 
         // init paint
         paint = new Paint();
@@ -346,6 +350,7 @@ public class InkView extends View {
      */
     public void setMaxStrokeWidth(float width) {
         maxStrokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
+        Log.d("INFO", "maxStrokeWidth: " + maxStrokeWidth);
     }
 
     /**
@@ -355,6 +360,7 @@ public class InkView extends View {
      */
     public void setMinStrokeWidth(float width) {
         minStrokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
+        Log.d("INFO", "minStrokeWidth: " + minStrokeWidth);
     }
 
     /**
@@ -455,28 +461,6 @@ public class InkView extends View {
 
         invalidate();
     }
-
-
-    //--------------------------------------
-    // Listener Interfaces
-    //--------------------------------------
-
-    /**
-     * Listener for the ink view to notify on actions
-     */
-    public interface InkListener {
-        /**
-         * Callback method when the ink view has been cleared
-         */
-        void onInkClear();
-
-        /**
-         * Callback method when the ink view receives a touch event
-         * (Will be fired multiple times during a signing)
-         */
-        void onInkDraw();
-    }
-
 
     //--------------------------------------
     // Util

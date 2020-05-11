@@ -32,7 +32,7 @@ public class InkPoint {
         return this.x == x && this.y == y;
     }
 
-    float distanceTo(InkPoint p) {
+    private float distanceTo(InkPoint p) {
         float dx = p.x - x;
         float dy = p.y - y;
 
